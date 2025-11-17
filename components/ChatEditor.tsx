@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client";
 import { MessengerType, Message } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { HoverInfo } from "@/components/ui/hover-info";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
@@ -349,14 +348,15 @@ export function ChatEditor() {
                       <Label className="font-semibold">
                         Сообщение #{index + 1}
                       </Label>
-                      <Button
-                        onClick={() => removeMessage(message.id)}
-                        size="sm"
-                        variant="ghost"
-                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                  <Button
+                    onClick={() => removeMessage(message.id)}
+                    size="sm"
+                    variant="ghost"
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                    aria-label="Удалить сообщение"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                     </div>
 
                     <div>

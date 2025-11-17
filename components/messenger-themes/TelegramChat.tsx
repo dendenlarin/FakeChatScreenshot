@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Message } from "@/types";
 import { cn } from "@/lib/utils";
 import { StatusBar } from "@/components/StatusBar";
@@ -26,7 +27,14 @@ export function TelegramChat({ contactName, contactAvatar, messages }: TelegramC
       <div className="bg-[#212121] px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-semibold">
           {contactAvatar ? (
-            <img src={contactAvatar} alt={contactName} className="w-full h-full rounded-full object-cover" />
+            <Image
+              src={contactAvatar}
+              alt={contactName}
+              width={40}
+              height={40}
+              className="w-full h-full rounded-full object-cover"
+              unoptimized
+            />
           ) : (
             contactName.charAt(0).toUpperCase()
           )}
@@ -81,7 +89,11 @@ export function TelegramChat({ contactName, contactAvatar, messages }: TelegramC
         <div className="flex-1 bg-[#181818] rounded-full px-4 py-2 text-sm text-gray-400">
           Message
         </div>
-        <button className="bg-[#8774E1] hover:bg-[#6d5bd4] text-white p-3 rounded-full shadow-md transition">
+        <button
+          className="bg-[#8774E1] hover:bg-[#6d5bd4] text-white p-3 rounded-full shadow-md transition"
+          aria-label="Отправить сообщение"
+          type="button"
+        >
           <Send className="w-4 h-4" />
         </button>
       </div>

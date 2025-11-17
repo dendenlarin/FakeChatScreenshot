@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Message } from "@/types";
 import { cn } from "@/lib/utils";
 import { StatusBar } from "@/components/StatusBar";
@@ -26,7 +27,14 @@ export function WhatsAppChat({ contactName, contactAvatar, messages }: WhatsAppC
       <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-semibold">
           {contactAvatar ? (
-            <img src={contactAvatar} alt={contactName} className="w-full h-full rounded-full object-cover" />
+            <Image
+              src={contactAvatar}
+              alt={contactName}
+              width={40}
+              height={40}
+              className="w-full h-full rounded-full object-cover"
+              unoptimized
+            />
           ) : (
             contactName.charAt(0).toUpperCase()
           )}
@@ -78,7 +86,11 @@ export function WhatsAppChat({ contactName, contactAvatar, messages }: WhatsAppC
         <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2 text-sm text-gray-400">
           Message
         </div>
-        <button className="bg-[#005C4B] hover:bg-[#014c3e] text-white p-3 rounded-full shadow-md transition">
+        <button
+          className="bg-[#005C4B] hover:bg-[#014c3e] text-white p-3 rounded-full shadow-md transition"
+          aria-label="Отправить сообщение"
+          type="button"
+        >
           <Send className="w-4 h-4" />
         </button>
       </div>
