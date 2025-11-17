@@ -1,17 +1,27 @@
 "use client";
 
-import { Message } from "@/types";
+import { Message, OSType } from "@/types";
 import { cn } from "@/lib/utils";
+import { StatusBar } from "@/components/StatusBar";
 
 interface WhatsAppChatProps {
   contactName: string;
   contactAvatar?: string;
   messages: Message[];
+  os: OSType;
 }
 
-export function WhatsAppChat({ contactName, contactAvatar, messages }: WhatsAppChatProps) {
+export function WhatsAppChat({ contactName, contactAvatar, messages, os }: WhatsAppChatProps) {
+  // iPhone: 390x844, Android: 390x866
+  const height = os === "ios" ? 844 : 866;
+
   return (
-    <div className="w-full max-w-[400px] bg-[#0B141A] rounded-lg overflow-hidden shadow-2xl">
+    <div
+      className="bg-[#0B141A] rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+      style={{ width: '390px', height: `${height}px` }}
+    >
+      {/* Status Bar */}
+      <StatusBar os={os} />
       {/* Header */}
       <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-semibold">
@@ -29,7 +39,7 @@ export function WhatsAppChat({ contactName, contactAvatar, messages }: WhatsAppC
 
       {/* Messages */}
       <div
-        className="p-4 space-y-2 min-h-[500px] max-h-[600px] overflow-y-auto"
+        className="p-4 space-y-2 flex-1 overflow-y-auto"
         style={{
           backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h100v100H0z\' fill=\'%230b141a\'/%3E%3Cpath d=\'M20 10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10M20 40c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10M20 70c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10\' stroke=\'%23182229\' stroke-width=\'0.5\' fill=\'none\'/%3E%3C/svg%3E")',
           backgroundSize: '100px 100px'

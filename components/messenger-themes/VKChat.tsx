@@ -1,17 +1,27 @@
 "use client";
 
-import { Message } from "@/types";
+import { Message, OSType } from "@/types";
 import { cn } from "@/lib/utils";
+import { StatusBar } from "@/components/StatusBar";
 
 interface VKChatProps {
   contactName: string;
   contactAvatar?: string;
   messages: Message[];
+  os: OSType;
 }
 
-export function VKChat({ contactName, contactAvatar, messages }: VKChatProps) {
+export function VKChat({ contactName, contactAvatar, messages, os }: VKChatProps) {
+  // iPhone: 390x844, Android: 390x866
+  const height = os === "ios" ? 844 : 866;
+
   return (
-    <div className="w-full max-w-[400px] bg-white rounded-lg overflow-hidden shadow-2xl">
+    <div
+      className="bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col"
+      style={{ width: '390px', height: `${height}px` }}
+    >
+      {/* Status Bar */}
+      <StatusBar os={os} />
       {/* Header */}
       <div className="bg-[#4680C2] px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#4680C2] font-semibold">
@@ -28,7 +38,7 @@ export function VKChat({ contactName, contactAvatar, messages }: VKChatProps) {
       </div>
 
       {/* Messages */}
-      <div className="bg-white p-4 space-y-2 min-h-[500px] max-h-[600px] overflow-y-auto">
+      <div className="bg-white p-4 space-y-2 flex-1 overflow-y-auto">
         {messages.map((message) => (
           <div
             key={message.id}

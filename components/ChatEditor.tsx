@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { MessengerType, Message } from "@/types";
+import { MessengerType, Message, OSType } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,6 +19,7 @@ const MAX_MESSAGES_PER_SCREEN = 10;
 
 export function ChatEditor() {
   const [messenger, setMessenger] = useState<MessengerType>("telegram");
+  const [os, setOs] = useState<OSType>("ios");
   const [contactName, setContactName] = useState("John Doe");
   const [contactAvatar, setContactAvatar] = useState("");
   const [messages, setMessages] = useState<Message[]>([
@@ -107,7 +108,7 @@ export function ChatEditor() {
   };
 
   const renderChat = () => {
-    const props = { contactName, contactAvatar, messages };
+    const props = { contactName, contactAvatar, messages, os };
 
     switch (messenger) {
       case "telegram":
@@ -141,6 +142,19 @@ export function ChatEditor() {
                 <CardTitle>Настройки чата</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="os">Операционная система</Label>
+                  <Select value={os} onValueChange={(value) => setOs(value as OSType)}>
+                    <SelectTrigger id="os" className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ios">iOS (iPhone)</SelectItem>
+                      <SelectItem value="android">Android (Huawei)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div>
                   <Label htmlFor="messenger">Мессенджер</Label>
                   <Select value={messenger} onValueChange={(value) => setMessenger(value as MessengerType)}>
