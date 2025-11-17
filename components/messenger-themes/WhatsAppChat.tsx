@@ -1,19 +1,19 @@
 "use client";
 
-import { Message, OSType } from "@/types";
+import { Message } from "@/types";
 import { cn } from "@/lib/utils";
 import { StatusBar } from "@/components/StatusBar";
+import { Send } from "lucide-react";
 
 interface WhatsAppChatProps {
   contactName: string;
   contactAvatar?: string;
   messages: Message[];
-  os: OSType;
 }
 
-export function WhatsAppChat({ contactName, contactAvatar, messages, os }: WhatsAppChatProps) {
-  // iPhone: 390x506 (60% of 844), Android: 390x520 (60% of 866)
-  const height = os === "ios" ? 506 : 520;
+export function WhatsAppChat({ contactName, contactAvatar, messages }: WhatsAppChatProps) {
+  // Высота кадра телефона
+  const height = 620;
 
   return (
     <div
@@ -21,7 +21,7 @@ export function WhatsAppChat({ contactName, contactAvatar, messages, os }: Whats
       style={{ width: '390px', height: `${height}px` }}
     >
       {/* Status Bar */}
-      <StatusBar os={os} />
+      <StatusBar />
       {/* Header */}
       <div className="bg-[#202C33] px-4 py-3 flex items-center gap-3">
         <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center text-white font-semibold">
@@ -41,8 +41,9 @@ export function WhatsAppChat({ contactName, contactAvatar, messages, os }: Whats
       <div
         className="p-4 space-y-2 flex-1 overflow-y-auto"
         style={{
-          backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'100\' height=\'100\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h100v100H0z\' fill=\'%230b141a\'/%3E%3Cpath d=\'M20 10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10M20 40c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10M20 70c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10m30-10c0 5-5 10-10 10\' stroke=\'%23182229\' stroke-width=\'0.5\' fill=\'none\'/%3E%3C/svg%3E")',
-          backgroundSize: '100px 100px'
+          backgroundImage:
+            'url("data:image/svg+xml,%3Csvg width=\'400\' height=\'400\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M0 0h400v400H0z\' fill=\'%230b141a\'/%3E%3Cpath d=\'M36 24c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 80c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 136c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 192c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 248c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 304c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20M36 360c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20m60-20c0 10-10 20-20 20\' stroke=\'%23182229\' stroke-width=\'1\' fill=\'none\'/%3E%3C/svg%3E")',
+          backgroundSize: "200px 200px",
         }}
       >
         {messages.map((message) => (
@@ -77,6 +78,9 @@ export function WhatsAppChat({ contactName, contactAvatar, messages, os }: Whats
         <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2 text-sm text-gray-400">
           Message
         </div>
+        <button className="bg-[#005C4B] hover:bg-[#014c3e] text-white p-3 rounded-full shadow-md transition">
+          <Send className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
