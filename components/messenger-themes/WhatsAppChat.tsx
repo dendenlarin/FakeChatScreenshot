@@ -12,8 +12,8 @@ interface WhatsAppChatProps {
 }
 
 export function WhatsAppChat({ contactName, contactAvatar, messages, os }: WhatsAppChatProps) {
-  // iPhone: 390x844, Android: 390x866
-  const height = os === "ios" ? 844 : 866;
+  // iPhone: 390x506 (60% of 844), Android: 390x520 (60% of 866)
+  const height = os === "ios" ? 506 : 520;
 
   return (
     <div

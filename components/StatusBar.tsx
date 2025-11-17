@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { OSType } from "@/types";
 import { Wifi, Signal, Battery } from "lucide-react";
 
@@ -8,15 +9,18 @@ interface StatusBarProps {
 }
 
 export function StatusBar({ os }: StatusBarProps) {
-  // Generate random battery level between 20-100%
-  const batteryLevel = Math.floor(Math.random() * 80) + 20;
+  // Generate random battery level between 20-100% only on client
+  const [batteryLevel, setBatteryLevel] = useState(75);
+  const [currentTime, setCurrentTime] = useState("12:00");
 
-  // Get current time in HH:MM format
-  const currentTime = new Date().toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
+  useEffect(() => {
+    setBatteryLevel(Math.floor(Math.random() * 80) + 20);
+    setCurrentTime(new Date().toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }));
+  }, []);
 
   if (os === "ios") {
     return (
