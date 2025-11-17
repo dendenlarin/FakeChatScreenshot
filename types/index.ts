@@ -1,4 +1,5 @@
 export type MessengerType = "telegram" | "whatsapp" | "viber" | "vk";
+export type OSType = "ios" | "android";
 
 export interface Message {
   id: string;
