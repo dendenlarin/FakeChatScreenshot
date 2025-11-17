@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TelegramChat } from "@/components/messenger-themes/TelegramChat";
 import { WhatsAppChat } from "@/components/messenger-themes/WhatsAppChat";
@@ -27,10 +27,6 @@ export function ChatEditor() {
   ]);
   const [messageCount, setMessageCount] = useState(2);
   const chatRef = useRef<HTMLDivElement>(null);
-
-  const handleMessengerChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMessenger(e.target.value as MessengerType);
-  };
 
   const handleMessageCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const count = parseInt(e.target.value) || 0;
@@ -128,12 +124,12 @@ export function ChatEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
+    <div className="min-h-screen bg-background text-foreground p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-2 text-gray-800">
+        <h1 className="text-4xl font-bold text-center mb-2">
           Fake Chat Screenshot Generator
         </h1>
-        <p className="text-center text-gray-600 mb-8">
+        <p className="text-center text-muted-foreground mb-8">
           Создайте реалистичные скриншоты переписок мессенджеров
         </p>
 
@@ -147,16 +143,16 @@ export function ChatEditor() {
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="messenger">Мессенджер</Label>
-                  <Select
-                    id="messenger"
-                    value={messenger}
-                    onChange={handleMessengerChange}
-                    className="mt-1"
-                  >
-                    <option value="telegram">Telegram</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="viber">Viber</option>
-                    <option value="vk">VK</option>
+                  <Select value={messenger} onValueChange={(value) => setMessenger(value as MessengerType)}>
+                    <SelectTrigger id="messenger" className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="telegram">Telegram</SelectItem>
+                      <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                      <SelectItem value="viber">Viber</SelectItem>
+                      <SelectItem value="vk">VK</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
 
@@ -191,7 +187,7 @@ export function ChatEditor() {
                     onChange={handleMessageCountChange}
                     className="mt-1"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} скриншот(ов) будет создано
                   </p>
                 </div>
@@ -210,14 +206,14 @@ export function ChatEditor() {
               </CardHeader>
               <CardContent className="space-y-4 max-h-[600px] overflow-y-auto">
                 {messages.map((message, index) => (
-                  <div key={message.id} className="border rounded-lg p-4 space-y-3 bg-white">
+                  <div key={message.id} className="border rounded-lg p-4 space-y-3 bg-card text-card-foreground">
                     <div className="flex items-center justify-between">
                       <Label className="font-semibold">Сообщение #{index + 1}</Label>
                       <Button
                         onClick={() => removeMessage(message.id)}
                         size="sm"
                         variant="ghost"
-                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>
@@ -226,15 +222,18 @@ export function ChatEditor() {
                     <div>
                       <Label htmlFor={`sender-${message.id}`} className="text-sm">Отправитель</Label>
                       <Select
-                        id={`sender-${message.id}`}
                         value={message.sender}
-                        onChange={(e) =>
-                          handleMessageChange(message.id, "sender", e.target.value)
+                        onValueChange={(value) =>
+                          handleMessageChange(message.id, "sender", value)
                         }
-                        className="mt-1"
                       >
-                        <option value="user">Вы</option>
-                        <option value="contact">Собеседник</option>
+                        <SelectTrigger id={`sender-${message.id}`} className="mt-1">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="user">Вы</SelectItem>
+                          <SelectItem value="contact">Собеседник</SelectItem>
+                        </SelectContent>
                       </Select>
                     </div>
 
