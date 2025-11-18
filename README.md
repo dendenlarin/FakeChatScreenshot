@@ -10,7 +10,8 @@
 - 📝 **Гибкая настройка**: Редактирование текста, времени, отправителя
 - 💾 **Экспорт в PNG**: Скачивание готовых изображений высокого качества
 - 🔄 **Множественные скриншоты**: Автоматическое разделение на несколько изображений при большом количестве сообщений
-- 🌐 **API**: Возможность генерации через POST запросы
+- 🌐 **REST API**: Генерация скриншотов через POST запросы - отправляете JSON, получаете PNG
+- 🚀 **Serverless**: Оптимизировано для деплоя на Vercel с Puppeteer
 
 ## Технологии
 
@@ -19,7 +20,8 @@
 - **TypeScript**
 - **Tailwind CSS**
 - **shadcn/ui** компоненты
-- **html-to-image** для экспорта изображений
+- **html-to-image** для клиентского экспорта
+- **Puppeteer** + **@sparticuz/chromium** для серверной генерации
 - **lucide-react** иконки
 
 ## Установка и запуск
@@ -86,22 +88,22 @@ vercel
 
 ## API
 
+Приложение предоставляет REST API для генерации скриншотов. Отправляете JSON с параметрами чата, получаете готовое PNG изображение.
+
 ### GET /api/generate
 
-Информация о API
+Получить документацию API
 
-**Response:**
-```json
-{
-  "message": "Fake Chat Screenshot Generator API",
-  "version": "1.0.0",
-  "endpoints": { ... }
-}
-```
+**Response:** JSON с описанием endpoints и примерами использования
 
 ### POST /api/generate
 
-Генерация конфигурации чата для создания скриншотов
+Сгенерировать и получить скриншот чата в формате PNG
+
+**Request Headers:**
+```
+Content-Type: application/json
+```
 
 **Request Body:**
 ```json
@@ -112,13 +114,13 @@ vercel
   "messages": [
     {
       "id": "1",
-      "text": "Привет!",
+      "text": "Привет! Как дела?",
       "sender": "contact",
       "timestamp": "12:30"
     },
     {
       "id": "2",
-      "text": "Привет! Как дела?",
+      "text": "Отлично, спасибо!",
       "sender": "user",
       "timestamp": "12:31"
     }
@@ -127,35 +129,62 @@ vercel
 ```
 
 **Response:**
-```json
-{
-  "success": true,
-  "message": "Configuration received",
-  "config": { ... }
-}
+- Content-Type: `image/png`
+- Body: PNG изображение (бинарные данные)
+- Header `X-Total-Screens`: количество экранов при разделении всех сообщений
+
+### Примеры использования API
+
+**cURL:**
+```bash
+curl -X POST https://your-domain.vercel.app/api/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messenger": "telegram",
+    "contactName": "John Doe",
+    "messages": [
+      {"id":"1","text":"Hello!","sender":"contact","timestamp":"12:00"}
+    ]
+  }' \
+  --output screenshot.png
 ```
 
-### Пример использования API
-
+**JavaScript (Fetch):**
 ```javascript
-const response = await fetch('/api/generate', {
+const response = await fetch('https://your-domain.vercel.app/api/generate', {
   method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     messenger: 'telegram',
     contactName: 'John Doe',
     messages: [
-      { id: '1', text: 'Hello!', sender: 'contact', timestamp: '12:00' },
-      { id: '2', text: 'Hi there!', sender: 'user', timestamp: '12:01' }
+      { id: '1', text: 'Hello!', sender: 'contact', timestamp: '12:00' }
     ]
   })
 });
 
-const data = await response.json();
-console.log(data);
+const blob = await response.blob();
+// Скачать изображение или отобразить на странице
 ```
+
+**Python:**
+```python
+import requests
+
+response = requests.post('https://your-domain.vercel.app/api/generate', json={
+    'messenger': 'telegram',
+    'contactName': 'John Doe',
+    'messages': [
+        {'id': '1', 'text': 'Hello!', 'sender': 'contact'}
+    ]
+})
+
+with open('screenshot.png', 'wb') as f:
+    f.write(response.content)
+```
+
+📖 **Подробная документация API:** см. [API_USAGE.md](./API_USAGE.md)
+🚀 **Гайд по деплою:** см. [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ## Использование
 
@@ -174,7 +203,8 @@ console.log(data);
 ```
 ├── app/
 │   ├── api/
-│   │   └── generate/          # API endpoints
+│   │   └── generate/
+│   │       └── route.ts       # API endpoint для генерации
 │   ├── globals.css            # Глобальные стили
 │   ├── layout.tsx             # Layout приложения
 │   └── page.tsx               # Главная страница
@@ -187,9 +217,15 @@ console.log(data);
 │   ├── ui/                    # UI компоненты shadcn/ui
 │   └── ChatEditor.tsx         # Главный редактор
 ├── lib/
+│   ├── screenshot.ts          # Puppeteer утилиты для серверной генерации
+│   ├── template-generator.ts  # Генератор HTML шаблонов
 │   └── utils.ts               # Утилиты
 ├── types/
 │   └── index.ts               # TypeScript типы
+├── examples/
+│   └── test-api.js            # Скрипт для тестирования API
+├── API_USAGE.md               # Документация по использованию API
+├── DEPLOYMENT.md              # Гайд по деплою на Vercel
 └── ...config files
 ```
 
