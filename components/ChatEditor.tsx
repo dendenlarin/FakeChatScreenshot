@@ -252,19 +252,23 @@ export function ChatEditor() {
   return (
     <div className="min-h-screen bg-background text-foreground px-6 py-8">
       <div className="max-w-7xl mx-auto">
-        {/* Bold Header */}
+        {/* Cyberpunk Header */}
         <div className="mb-12 animate-slide-down">
-          <div className="inline-block bg-brutal-blue brutal-border-thick brutal-shadow-lg px-8 py-6 mb-4">
+          <div className="inline-block relative">
             <h1
-              className="text-6xl md:text-7xl font-black text-white uppercase tracking-tight"
+              className="text-6xl md:text-7xl font-black text-neon-green uppercase tracking-wider animate-neon-pulse scanlines"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              CHAT FORGE
+              &gt; CHAT_FORGE
             </h1>
+            <div className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-green to-transparent opacity-70"></div>
           </div>
-          <div className="inline-block bg-brutal-yellow brutal-border px-6 py-3 ml-4 brutal-shadow">
-            <p className="text-lg font-bold uppercase tracking-wide" style={{ fontFamily: 'var(--font-mono)' }}>
-              BUILD. FAKE. EXPORT.
+          <div className="inline-block ml-6 mt-4">
+            <p
+              className="text-base font-semibold text-electric-blue tracking-widest"
+              style={{ fontFamily: 'var(--font-mono)' }}
+            >
+              [ GENERATE • CUSTOMIZE • EXPORT ]
             </p>
           </div>
         </div>
@@ -272,20 +276,21 @@ export function ChatEditor() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Editor Panel */}
           <div className="space-y-6 animate-slide-left delay-50">
-            <Card className="brutal-border brutal-shadow-lg bg-white">
-              <CardHeader className="bg-brutal-red brutal-border-b-4 border-black">
+            <Card className="glass-card cyber-border-thick rounded-lg overflow-hidden">
+              <CardHeader className="bg-cyber-gray cyber-border-pink border-b relative">
+                <div className="absolute top-0 left-0 w-full h-0.5 holographic"></div>
                 <CardTitle
-                  className="text-2xl text-white uppercase flex items-center gap-3"
+                  className="text-xl text-neon-pink uppercase flex items-center gap-3 tracking-wider"
                   style={{ fontFamily: 'var(--font-display)' }}
                 >
-                  <Zap className="w-7 h-7" />
-                  CONFIG
+                  <Zap className="w-6 h-6" />
+                  {`// CONFIG_PARAMS`}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5 pt-6">
                 <div>
-                  <Label htmlFor="messenger" className="label-tag mb-2">
-                    MESSENGER
+                  <Label htmlFor="messenger" className="label-terminal mb-2">
+                    &gt; MESSENGER_TYPE
                   </Label>
                   <Select
                     value={messenger}
@@ -293,10 +298,10 @@ export function ChatEditor() {
                       setMessenger(value as MessengerType)
                     }
                   >
-                    <SelectTrigger id="messenger" className="mt-2">
+                    <SelectTrigger id="messenger" className="mt-2 cyber-border bg-cyber-dark text-text-primary">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-cyber-dark border-neon-green">
                       <SelectItem value="telegram">Telegram</SelectItem>
                       <SelectItem value="whatsapp">WhatsApp</SelectItem>
                       <SelectItem value="viber">Viber</SelectItem>
@@ -306,33 +311,33 @@ export function ChatEditor() {
                 </div>
 
                 <div>
-                  <Label htmlFor="contactName" className="label-tag mb-2">
-                    CONTACT NAME
+                  <Label htmlFor="contactName" className="label-terminal mb-2">
+                    &gt; CONTACT_NAME
                   </Label>
                   <Input
                     id="contactName"
                     value={contactName}
                     onChange={(e) => setContactName(e.target.value)}
-                    className="mt-2"
+                    className="mt-2 cyber-border bg-cyber-dark text-text-primary"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="contactAvatar" className="label-tag mb-2">
-                    AVATAR URL
+                  <Label htmlFor="contactAvatar" className="label-terminal mb-2">
+                    &gt; AVATAR_URL
                   </Label>
                   <Input
                     id="contactAvatar"
                     value={contactAvatar}
                     onChange={(e) => setContactAvatar(e.target.value)}
-                    placeholder="https://example.com/avatar.jpg"
-                    className="mt-2"
+                    placeholder="https://..."
+                    className="mt-2 cyber-border bg-cyber-dark text-text-primary placeholder:text-text-muted"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="messageCount" className="label-tag mb-2">
-                    MESSAGE COUNT
+                  <Label htmlFor="messageCount" className="label-terminal mb-2">
+                    &gt; MESSAGE_COUNT
                   </Label>
                   <Input
                     id="messageCount"
@@ -340,29 +345,29 @@ export function ChatEditor() {
                     min="1"
                     value={messageCount}
                     onChange={handleMessageCountChange}
-                    className="mt-2"
+                    className="mt-2 cyber-border bg-cyber-dark text-text-primary"
                   />
-                  <p className="text-xs mt-2 font-mono font-bold">
-                    → {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} SCREENSHOT(S)
+                  <p className="text-xs mt-2 font-mono text-electric-blue">
+                    {`// OUTPUT: ${Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} SCREENSHOT(S)`}
                   </p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="brutal-border brutal-shadow-lg bg-white">
-              <CardHeader className="bg-brutal-lime brutal-border-b-4 border-black">
+            <Card className="glass-card cyber-border-thick rounded-lg overflow-hidden">
+              <CardHeader className="bg-cyber-gray cyber-border-blue border-b relative">
+                <div className="absolute top-0 left-0 w-full h-0.5 holographic"></div>
                 <div className="flex items-center justify-between">
                   <CardTitle
-                    className="text-2xl text-black uppercase flex items-center gap-3"
+                    className="text-xl text-electric-blue uppercase flex items-center gap-3 tracking-wider"
                     style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    MESSAGES
+                    {`// MSG_EDITOR`}
                   </CardTitle>
                   <Button
                     onClick={addMessage}
                     size="sm"
-                    variant="outline"
-                    className="brutal-border bg-white hover:bg-brutal-yellow"
+                    className="btn-cyber bg-cyber-dark text-neon-green hover:bg-cyber-gray-light border-neon-green"
                   >
                     <Plus className="w-4 h-4 mr-1" />
                     ADD
@@ -373,17 +378,17 @@ export function ChatEditor() {
                 {messages.map((message, index) => (
                   <div
                     key={message.id}
-                    className="brutal-border bg-white p-4 space-y-3 brutal-shadow brutal-hover"
+                    className="cyber-border bg-cyber-dark p-4 space-y-3 rounded-md transition-all hover:neon-glow-green"
                   >
-                    <div className="flex items-center justify-between pb-2 border-b-2 border-black">
-                      <Label className="font-bold uppercase" style={{ fontFamily: 'var(--font-mono)' }}>
-                        MSG #{index + 1}
+                    <div className="flex items-center justify-between pb-2 border-b border-neon-green/30">
+                      <Label className="font-bold uppercase text-amber tracking-wider" style={{ fontFamily: 'var(--font-mono)' }}>
+                        [MSG_{String(index + 1).padStart(2, '0')}]
                       </Label>
                       <Button
                         onClick={() => removeMessage(message.id)}
                         size="sm"
                         variant="ghost"
-                        className="text-brutal-red hover:bg-brutal-red hover:text-white"
+                        className="text-neon-pink hover:bg-neon-pink/20 hover:text-neon-pink"
                         aria-label="Remove message"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -393,9 +398,9 @@ export function ChatEditor() {
                     <div>
                       <Label
                         htmlFor={`sender-${message.id}`}
-                        className="label-tag mb-2"
+                        className="label-terminal mb-2"
                       >
-                        SENDER
+                        &gt; SENDER
                       </Label>
                       <Select
                         value={message.sender}
@@ -405,11 +410,11 @@ export function ChatEditor() {
                       >
                         <SelectTrigger
                           id={`sender-${message.id}`}
-                          className="mt-2"
+                          className="mt-2 cyber-border bg-cyber-gray text-text-primary"
                         >
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-cyber-dark border-neon-green">
                           <SelectItem value="user">YOU</SelectItem>
                           <SelectItem value="contact">CONTACT</SelectItem>
                         </SelectContent>
@@ -417,8 +422,8 @@ export function ChatEditor() {
                     </div>
 
                     <div>
-                      <Label htmlFor={`text-${message.id}`} className="label-tag mb-2">
-                        TEXT
+                      <Label htmlFor={`text-${message.id}`} className="label-terminal mb-2">
+                        &gt; TEXT
                       </Label>
                       <Textarea
                         id={`text-${message.id}`}
@@ -430,8 +435,8 @@ export function ChatEditor() {
                             e.target.value,
                           )
                         }
-                        placeholder="Enter message text..."
-                        className="mt-2"
+                        placeholder="Type message..."
+                        className="mt-2 cyber-border bg-cyber-gray text-text-primary placeholder:text-text-muted"
                         rows={3}
                       />
                     </div>
@@ -439,9 +444,9 @@ export function ChatEditor() {
                     <div>
                       <Label
                         htmlFor={`timestamp-${message.id}`}
-                        className="label-tag mb-2"
+                        className="label-terminal mb-2"
                       >
-                        TIME
+                        &gt; TIME
                       </Label>
                       <Input
                         id={`timestamp-${message.id}`}
@@ -454,7 +459,7 @@ export function ChatEditor() {
                           )
                         }
                         placeholder="12:00"
-                        className="mt-2"
+                        className="mt-2 cyber-border bg-cyber-gray text-text-primary placeholder:text-text-muted"
                       />
                     </div>
                   </div>
@@ -464,27 +469,27 @@ export function ChatEditor() {
 
             <Button
               onClick={exportToImage}
-              className="w-full bg-brutal-blue hover:bg-brutal-blue-dark text-white brutal-border brutal-shadow-lg hover:brutal-shadow py-7 text-xl uppercase font-black"
+              className="w-full btn-cyber bg-neon-green text-cyber-black hover:bg-neon-green/90 py-7 text-lg uppercase font-black tracking-wider neon-glow-green"
               size="lg"
               style={{ fontFamily: 'var(--font-display)' }}
             >
               <Download className="w-6 h-6 mr-3" />
-              EXPORT NOW
+              &gt;&gt; EXPORT_NOW
             </Button>
           </div>
 
-          {/* Preview Panel */}
+          {/* Preview Panel - neutral styling */}
           <div className="lg:sticky lg:top-8 lg:self-start animate-slide-right delay-100">
-            <Card className="brutal-border-thick brutal-shadow-xl bg-white">
-              <CardHeader className="bg-brutal-pink brutal-border-b-4 border-black stripe-pattern">
+            <Card className="border-2 border-gray-700 rounded-lg shadow-2xl bg-gray-900 overflow-hidden">
+              <CardHeader className="bg-gray-800 border-b border-gray-700">
                 <CardTitle
-                  className="text-2xl text-white uppercase"
-                  style={{ fontFamily: 'var(--font-display)' }}
+                  className="text-lg text-gray-300 uppercase tracking-wide font-semibold"
+                  style={{ fontFamily: 'var(--font-mono)' }}
                 >
-                  ▶ PREVIEW
+                  {`// PREVIEW`}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex justify-center p-8 bg-brutal-gray">
+              <CardContent className="flex justify-center p-8 bg-gray-900">
                 <div
                   ref={chatRef}
                   className="relative animate-pop delay-150"
