@@ -20,7 +20,7 @@ import { WhatsAppChat } from "@/components/messenger-themes/WhatsAppChat";
 import { ViberChat } from "@/components/messenger-themes/ViberChat";
 import { VKChat } from "@/components/messenger-themes/VKChat";
 import * as htmlToImage from "html-to-image";
-import { Download, Plus, Trash2 } from "lucide-react";
+import { Download, Plus, Trash2, Sparkles } from "lucide-react";
 
 const MAX_MESSAGES_PER_SCREEN = 10;
 
@@ -251,238 +251,265 @@ export function ChatEditor() {
 
   return (
     <div className="relative">
-      {/* Scanline Overlay */}
-      <div className="scanlines" />
+      {/* Art Deco Pattern Overlay */}
+      <div className="art-deco-pattern" />
 
-      <div className="min-h-screen bg-background text-foreground p-6">
+      <div className="min-h-screen bg-background text-foreground px-6 py-12">
         <div className="max-w-7xl mx-auto">
-          {/* Header with Glitch Effect */}
-          <div className="text-center mb-12 animate-fade-in-up">
-            <h1 className="text-5xl md:text-6xl font-bold mb-3 neon-cyan" style={{ fontFamily: 'var(--font-display)' }}>
-              <span className="inline-block hover:animate-glitch">
-                ⚡ CYBER MESSENGER LAB ⚡
-              </span>
+          {/* Elegant Header */}
+          <div className="text-center mb-16 animate-page-reveal">
+            <div className="inline-block mb-4">
+              <Sparkles className="w-8 h-8 text-brass mx-auto animate-gentle-float" strokeWidth={1.5} />
+            </div>
+            <h1
+              className="text-6xl md:text-7xl font-bold mb-4 text-gradient-burgundy tracking-tight"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Atelier de Conversation
             </h1>
-            <p className="text-lg text-muted-foreground" style={{ fontFamily: 'var(--font-sans)' }}>
-              <span className="neon-purple">▸</span> Create fake chat screenshots in style <span className="neon-purple">◂</span>
+            <p
+              className="text-xl text-warm-gray italic mb-6"
+              style={{ fontFamily: 'var(--font-accent)' }}
+            >
+              Craft Authentic Chat Narratives
             </p>
-            <div className="mt-3 flex items-center justify-center gap-2">
-              <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
-              <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-              <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+            <div className="ornamental-divider max-w-md mx-auto">
+              <span className="w-2 h-2 rounded-full bg-brass animate-gentle-pulse"></span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Editor Panel */}
-          <div className="space-y-6 animate-slide-in-left delay-100">
-            <Card className="glass-strong holographic-border hover-lift transform-3d transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-xl neon-cyan flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
-                  <span className="text-2xl">⚙️</span> НАСТРОЙКИ ЧАТА
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-5">
-                <div>
-                  <Label htmlFor="messenger">Мессенджер</Label>
-                  <Select
-                    value={messenger}
-                    onValueChange={(value) =>
-                      setMessenger(value as MessengerType)
-                    }
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Editor Panel */}
+            <div className="space-y-8 animate-slide-left delay-100">
+              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
+                <CardHeader className="border-b border-light-gray pb-4">
+                  <CardTitle
+                    className="text-2xl text-burgundy flex items-center gap-3"
+                    style={{ fontFamily: 'var(--font-display)' }}
                   >
-                    <SelectTrigger id="messenger" className="mt-1">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="telegram">Telegram</SelectItem>
-                      <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                      <SelectItem value="viber">Viber</SelectItem>
-                      <SelectItem value="vk">VK</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="contactName">Имя собеседника</Label>
-                  <Input
-                    id="contactName"
-                    value={contactName}
-                    onChange={(e) => setContactName(e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="contactAvatar">
-                    URL аватарки (опционально)
-                  </Label>
-                  <Input
-                    id="contactAvatar"
-                    value={contactAvatar}
-                    onChange={(e) => setContactAvatar(e.target.value)}
-                    placeholder="https://example.com/avatar.jpg"
-                    className="mt-1"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="messageCount">Количество сообщений</Label>
-                  <Input
-                    id="messageCount"
-                    type="number"
-                    min="1"
-                    value={messageCount}
-                    onChange={handleMessageCountChange}
-                    className="mt-1"
-                  />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)}{" "}
-                    скриншот(ов) будет создано
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="glass-strong holographic-border hover-lift transform-3d transition-all duration-300">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-xl neon-magenta flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
-                    <span className="text-2xl">💬</span> СООБЩЕНИЯ
+                    <div className="w-1 h-6 bg-brass"></div>
+                    Configuration
                   </CardTitle>
-                  <Button onClick={addMessage} size="sm" variant="outline" className="border-glow-cyan hover:scale-105 transition-transform">
-                    <Plus className="w-4 h-4 mr-1" />
-                    Добавить
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar">
-                {messages.map((message, index) => (
-                  <div
-                    key={message.id}
-                    className="glass border-glow-cyan rounded-xl p-4 space-y-3 hover:scale-[1.02] transition-all duration-200"
-                  >
-                    <div className="flex items-center justify-between">
-                      <Label className="font-semibold">
-                        Сообщение #{index + 1}
-                      </Label>
-                  <Button
-                    onClick={() => removeMessage(message.id)}
-                    size="sm"
-                    variant="ghost"
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                    aria-label="Удалить сообщение"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                    </div>
-
-                    <div>
-                      <Label
-                        htmlFor={`sender-${message.id}`}
-                        className="text-sm"
-                      >
-                        Отправитель
-                      </Label>
-                      <Select
-                        value={message.sender}
-                        onValueChange={(value) =>
-                          handleMessageChange(message.id, "sender", value)
-                        }
-                      >
-                        <SelectTrigger
-                          id={`sender-${message.id}`}
-                          className="mt-1"
-                        >
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="user">Вы</SelectItem>
-                          <SelectItem value="contact">Собеседник</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor={`text-${message.id}`} className="text-sm">
-                        Текст сообщения
-                      </Label>
-                      <Textarea
-                        id={`text-${message.id}`}
-                        value={message.text}
-                        onChange={(e) =>
-                          handleMessageChange(
-                            message.id,
-                            "text",
-                            e.target.value,
-                          )
-                        }
-                        placeholder="Введите текст сообщения..."
-                        className="mt-1"
-                        rows={3}
-                      />
-                    </div>
-
-                    <div>
-                      <Label
-                        htmlFor={`timestamp-${message.id}`}
-                        className="text-sm"
-                      >
-                        Время (опционально)
-                      </Label>
-                      <Input
-                        id={`timestamp-${message.id}`}
-                        value={message.timestamp || ""}
-                        onChange={(e) =>
-                          handleMessageChange(
-                            message.id,
-                            "timestamp",
-                            e.target.value,
-                          )
-                        }
-                        placeholder="12:00"
-                        className="mt-1"
-                      />
-                    </div>
+                </CardHeader>
+                <CardContent className="space-y-6 pt-6">
+                  <div>
+                    <Label htmlFor="messenger" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
+                      Messenger
+                    </Label>
+                    <Select
+                      value={messenger}
+                      onValueChange={(value) =>
+                        setMessenger(value as MessengerType)
+                      }
+                    >
+                      <SelectTrigger id="messenger" className="mt-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="telegram">Telegram</SelectItem>
+                        <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                        <SelectItem value="viber">Viber</SelectItem>
+                        <SelectItem value="vk">VK</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
 
-            <Button
-              onClick={exportToImage}
-              className="w-full border-glow-magenta bg-gradient-to-r from-neon-magenta/20 to-neon-purple/20 hover:from-neon-magenta/30 hover:to-neon-purple/30 text-foreground font-bold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-neon-magenta"
-              size="lg"
-              style={{ fontFamily: 'var(--font-accent)' }}
-            >
-              <Download className="w-5 h-5 mr-2" />
-              💾 СОХРАНИТЬ ИЗОБРАЖЕНИЯ
-            </Button>
-          </div>
+                  <div>
+                    <Label htmlFor="contactName" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
+                      Contact Name
+                    </Label>
+                    <Input
+                      id="contactName"
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      className="mt-1"
+                    />
+                  </div>
 
-          {/* Preview Panel */}
-          <div className="lg:sticky lg:top-6 lg:self-start animate-slide-in-right delay-200">
-            <Card className="glass-strong holographic-border hover-tilt transform-3d transition-all duration-300">
-              <CardHeader>
-                <CardTitle className="text-xl neon-lime flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
-                  <span className="text-2xl">📱</span> ПРЕДПРОСМОТР
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex justify-center p-8">
-                <div
-                  ref={chatRef}
-                  className="relative"
-                  style={{
-                    filter: 'drop-shadow(0 0 30px rgba(0, 240, 255, 0.3))'
-                  }}
-                >
-                  {renderChat()}
-                </div>
-              </CardContent>
-            </Card>
+                  <div>
+                    <Label htmlFor="contactAvatar" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
+                      Avatar URL <span className="text-xs normal-case">(optional)</span>
+                    </Label>
+                    <Input
+                      id="contactAvatar"
+                      value={contactAvatar}
+                      onChange={(e) => setContactAvatar(e.target.value)}
+                      placeholder="https://example.com/avatar.jpg"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="messageCount" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
+                      Message Count
+                    </Label>
+                    <Input
+                      id="messageCount"
+                      type="number"
+                      min="1"
+                      value={messageCount}
+                      onChange={handleMessageCountChange}
+                      className="mt-1"
+                    />
+                    <p className="text-xs text-warm-gray mt-2 italic" style={{ fontFamily: 'var(--font-accent)' }}>
+                      {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} screenshot{Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN) !== 1 ? 's' : ''} will be generated
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
+                <CardHeader className="border-b border-light-gray pb-4">
+                  <div className="flex items-center justify-between">
+                    <CardTitle
+                      className="text-2xl text-burgundy flex items-center gap-3"
+                      style={{ fontFamily: 'var(--font-display)' }}
+                    >
+                      <div className="w-1 h-6 bg-brass"></div>
+                      Messages
+                    </CardTitle>
+                    <Button
+                      onClick={addMessage}
+                      size="sm"
+                      variant="outline"
+                      className="border-burgundy text-burgundy hover:bg-burgundy hover:text-warm-cream transition-all duration-300"
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-5 max-h-[600px] overflow-y-auto custom-scrollbar pt-6">
+                  {messages.map((message, index) => (
+                    <div
+                      key={message.id}
+                      className="paper-texture border border-light-gray rounded-md p-5 space-y-4 transition-all duration-300 hover:shadow-medium"
+                    >
+                      <div className="flex items-center justify-between border-b border-light-gray pb-3">
+                        <Label className="font-semibold text-charcoal" style={{ fontFamily: 'var(--font-display)' }}>
+                          Message #{index + 1}
+                        </Label>
+                        <Button
+                          onClick={() => removeMessage(message.id)}
+                          size="sm"
+                          variant="ghost"
+                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                          aria-label="Remove message"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+
+                      <div>
+                        <Label
+                          htmlFor={`sender-${message.id}`}
+                          className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block"
+                        >
+                          Sender
+                        </Label>
+                        <Select
+                          value={message.sender}
+                          onValueChange={(value) =>
+                            handleMessageChange(message.id, "sender", value)
+                          }
+                        >
+                          <SelectTrigger
+                            id={`sender-${message.id}`}
+                            className="mt-1"
+                          >
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="user">You</SelectItem>
+                            <SelectItem value="contact">Contact</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div>
+                        <Label htmlFor={`text-${message.id}`} className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
+                          Message Text
+                        </Label>
+                        <Textarea
+                          id={`text-${message.id}`}
+                          value={message.text}
+                          onChange={(e) =>
+                            handleMessageChange(
+                              message.id,
+                              "text",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="Enter message text..."
+                          className="mt-1"
+                          rows={3}
+                        />
+                      </div>
+
+                      <div>
+                        <Label
+                          htmlFor={`timestamp-${message.id}`}
+                          className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block"
+                        >
+                          Time <span className="text-xs normal-case">(optional)</span>
+                        </Label>
+                        <Input
+                          id={`timestamp-${message.id}`}
+                          value={message.timestamp || ""}
+                          onChange={(e) =>
+                            handleMessageChange(
+                              message.id,
+                              "timestamp",
+                              e.target.value,
+                            )
+                          }
+                          placeholder="12:00"
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              <Button
+                onClick={exportToImage}
+                className="w-full bg-gradient-to-r from-burgundy to-burgundy-dark hover:from-burgundy-dark hover:to-burgundy text-warm-cream font-bold py-6 transition-all duration-300 shadow-medium hover:shadow-elevated text-lg"
+                size="lg"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                <Download className="w-5 h-5 mr-3" />
+                Save Images
+              </Button>
+            </div>
+
+            {/* Preview Panel */}
+            <div className="lg:sticky lg:top-6 lg:self-start animate-slide-right delay-200">
+              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
+                <CardHeader className="border-b border-light-gray pb-4">
+                  <CardTitle
+                    className="text-2xl text-burgundy flex items-center gap-3"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    <div className="w-1 h-6 bg-brass"></div>
+                    Preview
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex justify-center p-8 bg-soft-ivory">
+                  <div
+                    ref={chatRef}
+                    className="relative transition-all duration-300 hover:scale-105"
+                    style={{
+                      filter: 'drop-shadow(0 8px 24px rgba(43, 40, 38, 0.15))'
+                    }}
+                  >
+                    {renderChat()}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );
