@@ -250,23 +250,39 @@ export function ChatEditor() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-6">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-2">
-          Fake Chat Screenshot Generator
-        </h1>
-        <p className="text-center text-muted-foreground mb-8">
-          Создайте реалистичные скриншоты переписок мессенджеров
-        </p>
+    <div className="relative">
+      {/* Scanline Overlay */}
+      <div className="scanlines" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="min-h-screen bg-background text-foreground p-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Header with Glitch Effect */}
+          <div className="text-center mb-12 animate-fade-in-up">
+            <h1 className="text-5xl md:text-6xl font-bold mb-3 neon-cyan" style={{ fontFamily: 'var(--font-display)' }}>
+              <span className="inline-block hover:animate-glitch">
+                ⚡ CYBER MESSENGER LAB ⚡
+              </span>
+            </h1>
+            <p className="text-lg text-muted-foreground" style={{ fontFamily: 'var(--font-sans)' }}>
+              <span className="neon-purple">▸</span> Create fake chat screenshots in style <span className="neon-purple">◂</span>
+            </p>
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+              <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+              <div className="h-px w-20 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Editor Panel */}
-          <div className="space-y-4">
-            <Card>
+          <div className="space-y-6 animate-slide-in-left delay-100">
+            <Card className="glass-strong holographic-border hover-lift transform-3d transition-all duration-300">
               <CardHeader>
-                <CardTitle>Настройки чата</CardTitle>
+                <CardTitle className="text-xl neon-cyan flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
+                  <span className="text-2xl">⚙️</span> НАСТРОЙКИ ЧАТА
+                </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5">
                 <div>
                   <Label htmlFor="messenger">Мессенджер</Label>
                   <Select
@@ -328,21 +344,23 @@ export function ChatEditor() {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="glass-strong holographic-border hover-lift transform-3d transition-all duration-300">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>Сообщения</CardTitle>
-                  <Button onClick={addMessage} size="sm" variant="outline">
+                  <CardTitle className="text-xl neon-magenta flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
+                    <span className="text-2xl">💬</span> СООБЩЕНИЯ
+                  </CardTitle>
+                  <Button onClick={addMessage} size="sm" variant="outline" className="border-glow-cyan hover:scale-105 transition-transform">
                     <Plus className="w-4 h-4 mr-1" />
                     Добавить
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4 max-h-[600px] overflow-y-auto">
+              <CardContent className="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar">
                 {messages.map((message, index) => (
                   <div
                     key={message.id}
-                    className="border rounded-lg p-4 space-y-3 bg-card text-card-foreground"
+                    className="glass border-glow-cyan rounded-xl p-4 space-y-3 hover:scale-[1.02] transition-all duration-200"
                   >
                     <div className="flex items-center justify-between">
                       <Label className="font-semibold">
@@ -431,24 +449,40 @@ export function ChatEditor() {
               </CardContent>
             </Card>
 
-            <Button onClick={exportToImage} className="w-full" size="lg">
-              <Download className="w-4 h-4 mr-2" />
-              Сохранить изображения
+            <Button
+              onClick={exportToImage}
+              className="w-full border-glow-magenta bg-gradient-to-r from-neon-magenta/20 to-neon-purple/20 hover:from-neon-magenta/30 hover:to-neon-purple/30 text-foreground font-bold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-neon-magenta"
+              size="lg"
+              style={{ fontFamily: 'var(--font-accent)' }}
+            >
+              <Download className="w-5 h-5 mr-2" />
+              💾 СОХРАНИТЬ ИЗОБРАЖЕНИЯ
             </Button>
           </div>
 
           {/* Preview Panel */}
-          <div className="lg:sticky lg:top-6 lg:self-start">
-            <Card>
+          <div className="lg:sticky lg:top-6 lg:self-start animate-slide-in-right delay-200">
+            <Card className="glass-strong holographic-border hover-tilt transform-3d transition-all duration-300">
               <CardHeader>
-                <CardTitle>Предпросмотр</CardTitle>
+                <CardTitle className="text-xl neon-lime flex items-center gap-2" style={{ fontFamily: 'var(--font-accent)' }}>
+                  <span className="text-2xl">📱</span> ПРЕДПРОСМОТР
+                </CardTitle>
               </CardHeader>
-              <CardContent className="flex justify-center">
-                <div ref={chatRef}>{renderChat()}</div>
+              <CardContent className="flex justify-center p-8">
+                <div
+                  ref={chatRef}
+                  className="relative"
+                  style={{
+                    filter: 'drop-shadow(0 0 30px rgba(0, 240, 255, 0.3))'
+                  }}
+                >
+                  {renderChat()}
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
