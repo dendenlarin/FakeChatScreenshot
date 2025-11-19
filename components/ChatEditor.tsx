@@ -20,7 +20,7 @@ import { WhatsAppChat } from "@/components/messenger-themes/WhatsAppChat";
 import { ViberChat } from "@/components/messenger-themes/ViberChat";
 import { VKChat } from "@/components/messenger-themes/VKChat";
 import * as htmlToImage from "html-to-image";
-import { Download, Plus, Trash2, Sparkles } from "lucide-react";
+import { Download, Plus, Trash2, Zap } from "lucide-react";
 
 const MAX_MESSAGES_PER_SCREEN = 10;
 
@@ -250,264 +250,249 @@ export function ChatEditor() {
   };
 
   return (
-    <div className="relative">
-      {/* Art Deco Pattern Overlay */}
-      <div className="art-deco-pattern" />
-
-      <div className="min-h-screen bg-background text-foreground px-6 py-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Elegant Header */}
-          <div className="text-center mb-16 animate-page-reveal">
-            <div className="inline-block mb-4">
-              <Sparkles className="w-8 h-8 text-brass mx-auto animate-gentle-float" strokeWidth={1.5} />
-            </div>
+    <div className="min-h-screen bg-background text-foreground px-6 py-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Bold Header */}
+        <div className="mb-12 animate-slide-down">
+          <div className="inline-block bg-brutal-blue brutal-border-thick brutal-shadow-lg px-8 py-6 mb-4">
             <h1
-              className="text-6xl md:text-7xl font-bold mb-4 text-gradient-burgundy tracking-tight"
+              className="text-6xl md:text-7xl font-black text-white uppercase tracking-tight"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Atelier de Conversation
+              CHAT FORGE
             </h1>
-            <p
-              className="text-xl text-warm-gray italic mb-6"
-              style={{ fontFamily: 'var(--font-accent)' }}
-            >
-              Craft Authentic Chat Narratives
+          </div>
+          <div className="inline-block bg-brutal-yellow brutal-border px-6 py-3 ml-4 brutal-shadow">
+            <p className="text-lg font-bold uppercase tracking-wide" style={{ fontFamily: 'var(--font-mono)' }}>
+              BUILD. FAKE. EXPORT.
             </p>
-            <div className="ornamental-divider max-w-md mx-auto">
-              <span className="w-2 h-2 rounded-full bg-brass animate-gentle-pulse"></span>
-            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Editor Panel */}
+          <div className="space-y-6 animate-slide-left delay-50">
+            <Card className="brutal-border brutal-shadow-lg bg-white">
+              <CardHeader className="bg-brutal-red brutal-border-b-4 border-black">
+                <CardTitle
+                  className="text-2xl text-white uppercase flex items-center gap-3"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  <Zap className="w-7 h-7" />
+                  CONFIG
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-5 pt-6">
+                <div>
+                  <Label htmlFor="messenger" className="label-tag mb-2">
+                    MESSENGER
+                  </Label>
+                  <Select
+                    value={messenger}
+                    onValueChange={(value) =>
+                      setMessenger(value as MessengerType)
+                    }
+                  >
+                    <SelectTrigger id="messenger" className="mt-2">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="telegram">Telegram</SelectItem>
+                      <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                      <SelectItem value="viber">Viber</SelectItem>
+                      <SelectItem value="vk">VK</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="contactName" className="label-tag mb-2">
+                    CONTACT NAME
+                  </Label>
+                  <Input
+                    id="contactName"
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="contactAvatar" className="label-tag mb-2">
+                    AVATAR URL
+                  </Label>
+                  <Input
+                    id="contactAvatar"
+                    value={contactAvatar}
+                    onChange={(e) => setContactAvatar(e.target.value)}
+                    placeholder="https://example.com/avatar.jpg"
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="messageCount" className="label-tag mb-2">
+                    MESSAGE COUNT
+                  </Label>
+                  <Input
+                    id="messageCount"
+                    type="number"
+                    min="1"
+                    value={messageCount}
+                    onChange={handleMessageCountChange}
+                    className="mt-2"
+                  />
+                  <p className="text-xs mt-2 font-mono font-bold">
+                    → {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} SCREENSHOT(S)
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="brutal-border brutal-shadow-lg bg-white">
+              <CardHeader className="bg-brutal-lime brutal-border-b-4 border-black">
+                <div className="flex items-center justify-between">
+                  <CardTitle
+                    className="text-2xl text-black uppercase flex items-center gap-3"
+                    style={{ fontFamily: 'var(--font-display)' }}
+                  >
+                    MESSAGES
+                  </CardTitle>
+                  <Button
+                    onClick={addMessage}
+                    size="sm"
+                    variant="outline"
+                    className="brutal-border bg-white hover:bg-brutal-yellow"
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    ADD
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pt-6">
+                {messages.map((message, index) => (
+                  <div
+                    key={message.id}
+                    className="brutal-border bg-white p-4 space-y-3 brutal-shadow brutal-hover"
+                  >
+                    <div className="flex items-center justify-between pb-2 border-b-2 border-black">
+                      <Label className="font-bold uppercase" style={{ fontFamily: 'var(--font-mono)' }}>
+                        MSG #{index + 1}
+                      </Label>
+                      <Button
+                        onClick={() => removeMessage(message.id)}
+                        size="sm"
+                        variant="ghost"
+                        className="text-brutal-red hover:bg-brutal-red hover:text-white"
+                        aria-label="Remove message"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor={`sender-${message.id}`}
+                        className="label-tag mb-2"
+                      >
+                        SENDER
+                      </Label>
+                      <Select
+                        value={message.sender}
+                        onValueChange={(value) =>
+                          handleMessageChange(message.id, "sender", value)
+                        }
+                      >
+                        <SelectTrigger
+                          id={`sender-${message.id}`}
+                          className="mt-2"
+                        >
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="user">YOU</SelectItem>
+                          <SelectItem value="contact">CONTACT</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor={`text-${message.id}`} className="label-tag mb-2">
+                        TEXT
+                      </Label>
+                      <Textarea
+                        id={`text-${message.id}`}
+                        value={message.text}
+                        onChange={(e) =>
+                          handleMessageChange(
+                            message.id,
+                            "text",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="Enter message text..."
+                        className="mt-2"
+                        rows={3}
+                      />
+                    </div>
+
+                    <div>
+                      <Label
+                        htmlFor={`timestamp-${message.id}`}
+                        className="label-tag mb-2"
+                      >
+                        TIME
+                      </Label>
+                      <Input
+                        id={`timestamp-${message.id}`}
+                        value={message.timestamp || ""}
+                        onChange={(e) =>
+                          handleMessageChange(
+                            message.id,
+                            "timestamp",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="12:00"
+                        className="mt-2"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+
+            <Button
+              onClick={exportToImage}
+              className="w-full bg-brutal-blue hover:bg-brutal-blue-dark text-white brutal-border brutal-shadow-lg hover:brutal-shadow py-7 text-xl uppercase font-black"
+              size="lg"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              <Download className="w-6 h-6 mr-3" />
+              EXPORT NOW
+            </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Editor Panel */}
-            <div className="space-y-8 animate-slide-left delay-100">
-              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
-                <CardHeader className="border-b border-light-gray pb-4">
-                  <CardTitle
-                    className="text-2xl text-burgundy flex items-center gap-3"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    <div className="w-1 h-6 bg-brass"></div>
-                    Configuration
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6 pt-6">
-                  <div>
-                    <Label htmlFor="messenger" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
-                      Messenger
-                    </Label>
-                    <Select
-                      value={messenger}
-                      onValueChange={(value) =>
-                        setMessenger(value as MessengerType)
-                      }
-                    >
-                      <SelectTrigger id="messenger" className="mt-1">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="telegram">Telegram</SelectItem>
-                        <SelectItem value="whatsapp">WhatsApp</SelectItem>
-                        <SelectItem value="viber">Viber</SelectItem>
-                        <SelectItem value="vk">VK</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="contactName" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
-                      Contact Name
-                    </Label>
-                    <Input
-                      id="contactName"
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      className="mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="contactAvatar" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
-                      Avatar URL <span className="text-xs normal-case">(optional)</span>
-                    </Label>
-                    <Input
-                      id="contactAvatar"
-                      value={contactAvatar}
-                      onChange={(e) => setContactAvatar(e.target.value)}
-                      placeholder="https://example.com/avatar.jpg"
-                      className="mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="messageCount" className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
-                      Message Count
-                    </Label>
-                    <Input
-                      id="messageCount"
-                      type="number"
-                      min="1"
-                      value={messageCount}
-                      onChange={handleMessageCountChange}
-                      className="mt-1"
-                    />
-                    <p className="text-xs text-warm-gray mt-2 italic" style={{ fontFamily: 'var(--font-accent)' }}>
-                      {Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN)} screenshot{Math.ceil(messageCount / MAX_MESSAGES_PER_SCREEN) !== 1 ? 's' : ''} will be generated
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
-                <CardHeader className="border-b border-light-gray pb-4">
-                  <div className="flex items-center justify-between">
-                    <CardTitle
-                      className="text-2xl text-burgundy flex items-center gap-3"
-                      style={{ fontFamily: 'var(--font-display)' }}
-                    >
-                      <div className="w-1 h-6 bg-brass"></div>
-                      Messages
-                    </CardTitle>
-                    <Button
-                      onClick={addMessage}
-                      size="sm"
-                      variant="outline"
-                      className="border-burgundy text-burgundy hover:bg-burgundy hover:text-warm-cream transition-all duration-300"
-                    >
-                      <Plus className="w-4 h-4 mr-1" />
-                      Add
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-5 max-h-[600px] overflow-y-auto custom-scrollbar pt-6">
-                  {messages.map((message, index) => (
-                    <div
-                      key={message.id}
-                      className="paper-texture border border-light-gray rounded-md p-5 space-y-4 transition-all duration-300 hover:shadow-medium"
-                    >
-                      <div className="flex items-center justify-between border-b border-light-gray pb-3">
-                        <Label className="font-semibold text-charcoal" style={{ fontFamily: 'var(--font-display)' }}>
-                          Message #{index + 1}
-                        </Label>
-                        <Button
-                          onClick={() => removeMessage(message.id)}
-                          size="sm"
-                          variant="ghost"
-                          className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                          aria-label="Remove message"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-
-                      <div>
-                        <Label
-                          htmlFor={`sender-${message.id}`}
-                          className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block"
-                        >
-                          Sender
-                        </Label>
-                        <Select
-                          value={message.sender}
-                          onValueChange={(value) =>
-                            handleMessageChange(message.id, "sender", value)
-                          }
-                        >
-                          <SelectTrigger
-                            id={`sender-${message.id}`}
-                            className="mt-1"
-                          >
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="user">You</SelectItem>
-                            <SelectItem value="contact">Contact</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div>
-                        <Label htmlFor={`text-${message.id}`} className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block">
-                          Message Text
-                        </Label>
-                        <Textarea
-                          id={`text-${message.id}`}
-                          value={message.text}
-                          onChange={(e) =>
-                            handleMessageChange(
-                              message.id,
-                              "text",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="Enter message text..."
-                          className="mt-1"
-                          rows={3}
-                        />
-                      </div>
-
-                      <div>
-                        <Label
-                          htmlFor={`timestamp-${message.id}`}
-                          className="text-sm font-semibold uppercase tracking-wide text-warm-gray mb-2 block"
-                        >
-                          Time <span className="text-xs normal-case">(optional)</span>
-                        </Label>
-                        <Input
-                          id={`timestamp-${message.id}`}
-                          value={message.timestamp || ""}
-                          onChange={(e) =>
-                            handleMessageChange(
-                              message.id,
-                              "timestamp",
-                              e.target.value,
-                            )
-                          }
-                          placeholder="12:00"
-                          className="mt-1"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-
-              <Button
-                onClick={exportToImage}
-                className="w-full bg-gradient-to-r from-burgundy to-burgundy-dark hover:from-burgundy-dark hover:to-burgundy text-warm-cream font-bold py-6 transition-all duration-300 shadow-medium hover:shadow-elevated text-lg"
-                size="lg"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                <Download className="w-5 h-5 mr-3" />
-                Save Images
-              </Button>
-            </div>
-
-            {/* Preview Panel */}
-            <div className="lg:sticky lg:top-6 lg:self-start animate-slide-right delay-200">
-              <Card className="elevated-card art-deco-border corner-decoration rounded-lg overflow-hidden">
-                <CardHeader className="border-b border-light-gray pb-4">
-                  <CardTitle
-                    className="text-2xl text-burgundy flex items-center gap-3"
-                    style={{ fontFamily: 'var(--font-display)' }}
-                  >
-                    <div className="w-1 h-6 bg-brass"></div>
-                    Preview
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="flex justify-center p-8 bg-soft-ivory">
-                  <div
-                    ref={chatRef}
-                    className="relative transition-all duration-300 hover:scale-105"
-                    style={{
-                      filter: 'drop-shadow(0 8px 24px rgba(43, 40, 38, 0.15))'
-                    }}
-                  >
-                    {renderChat()}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Preview Panel */}
+          <div className="lg:sticky lg:top-8 lg:self-start animate-slide-right delay-100">
+            <Card className="brutal-border-thick brutal-shadow-xl bg-white">
+              <CardHeader className="bg-brutal-pink brutal-border-b-4 border-black stripe-pattern">
+                <CardTitle
+                  className="text-2xl text-white uppercase"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  ▶ PREVIEW
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex justify-center p-8 bg-brutal-gray">
+                <div
+                  ref={chatRef}
+                  className="relative animate-pop delay-150"
+                >
+                  {renderChat()}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
